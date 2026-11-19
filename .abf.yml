@@ -1,4 +1,5 @@
 sources:
-  pcollections-4.0.2.tar.gz: 281aa978c7c239d6444e4d77c91dfe913121ab8a
-removed_sources:
+  pcollections-5.0.0.tar.gz: face737132d9a57ab0a0f185f905f05754a7978a
   pcollections-4.0.1.tar.gz: 4518d2c1cfc9c1d83cdf39f87e6cedfec253f10a
+removed_sources:
+  pcollections-4.0.2.tar.gz: 281aa978c7c239d6444e4d77c91dfe913121ab8a
