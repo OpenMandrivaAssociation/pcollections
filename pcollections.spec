@@ -1,11 +1,11 @@
 Name:		pcollections
-Version:	4.0.1
+Version:	4.0.2
 Release:	1
 Summary:	Persistent Java collections
 Group:		Development/Java
 License:	MIT
 URL:		https://github.com/hrldcpr/pcollections
-# Tag v4.0.1. The Gradle wrapper jar is not in this archive.
+# Tag v4.0.2. The Gradle wrapper jar is not in this archive.
 Source0:	https://github.com/hrldcpr/pcollections/archive/refs/tags/v%{version}.tar.gz#/pcollections-%{version}.tar.gz
 
 BuildArch:	noarch
@@ -15,8 +15,9 @@ BuildRequires:	javapackages-filesystem
 
 %description
 PCollections %{version} is a library of persistent and immutable
-collection classes. Error Prone 2.50.0 links this jar. module-info.java
-is not compiled, so the class files stay readable on JDK 25.
+collection classes. 4.0.2 fixes TreePMap serialization. Error Prone
+2.50.0 links this jar. module-info.java is not compiled, so the class
+files stay readable on JDK 25.
 
 %prep
 %autosetup -n pcollections-%{version}
@@ -24,6 +25,8 @@ find . \( -name '*.jar' -o -name '*.class' -o -name '*.so' -o -name '*.node' -o 
 
 %build
 set -eo pipefail
+export JAVA_HOME=%{_jvmdir}/java-openjdk
+export PATH="$JAVA_HOME/bin:$PATH"
 find src/main/java -name '*.java' ! -name 'module-info.java' > sources.list
 test "$(wc -l < sources.list)" -eq 33
 mkdir -p classes
@@ -46,7 +49,7 @@ cat > pcollections.pom << 'EOF'
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.pcollections</groupId>
   <artifactId>pcollections</artifactId>
-  <version>4.0.1</version>
+  <version>%{version}</version>
   <name>PCollections</name>
   <description>Persistent Java collections</description>
   <licenses>
@@ -65,6 +68,8 @@ sysjar install --buildroot %{buildroot} \
 
 %check
 set -eo pipefail
+export JAVA_HOME=%{_jvmdir}/java-openjdk
+export PATH="$JAVA_HOME/bin:$PATH"
 mkdir -p check
 cat > check/Smoke.java << 'EOF'
 import org.pcollections.ConsPStack;
